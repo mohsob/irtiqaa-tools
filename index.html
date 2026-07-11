@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>نسخ رقم المحفظة</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 
@@ -20,32 +18,27 @@ font-family:'Cairo',sans-serif;
 }
 
 body{
-
 background:#F8F6F2;
-
 display:flex;
-
 justify-content:center;
-
 align-items:center;
-
-height:100vh;
-
+min-height:100vh;
+padding:20px;
 }
 
 .card{
 
-background:white;
+background:#fff;
 
-width:380px;
+width:420px;
 
-max-width:92%;
+max-width:100%;
 
 padding:35px;
 
-border-radius:18px;
+border-radius:20px;
 
-box-shadow:0 8px 25px rgba(0,0,0,.08);
+box-shadow:0 12px 35px rgba(0,0,0,.08);
 
 text-align:center;
 
@@ -55,7 +48,19 @@ h2{
 
 color:#123E78;
 
-margin-bottom:25px;
+margin-bottom:12px;
+
+font-size:28px;
+
+}
+
+.subtitle{
+
+color:#777;
+
+margin-bottom:30px;
+
+font-size:15px;
 
 }
 
@@ -63,13 +68,15 @@ margin-bottom:25px;
 
 font-size:34px;
 
-font-weight:bold;
+font-weight:700;
 
 color:#123E78;
 
-letter-spacing:2px;
+letter-spacing:1px;
 
-margin-bottom:25px;
+margin-bottom:30px;
+
+transition:.3s;
 
 }
 
@@ -77,19 +84,17 @@ button{
 
 width:100%;
 
-padding:14px;
-
 border:none;
 
 border-radius:12px;
+
+padding:15px;
 
 font-size:18px;
 
 cursor:pointer;
 
-transition:.3s;
-
-margin-top:10px;
+transition:.25s;
 
 }
 
@@ -103,7 +108,7 @@ color:white;
 
 #copyBtn:hover{
 
-background:#0f3465;
+background:#0E3263;
 
 }
 
@@ -115,17 +120,31 @@ background:#B98A2E;
 
 color:white;
 
+margin-top:15px;
+
 }
 
-.success{
+#message{
 
 display:none;
 
-margin-top:18px;
+margin-top:20px;
+
+color:#2E7D32;
 
 font-weight:bold;
 
-color:#2E7D32;
+}
+
+.note{
+
+display:none;
+
+margin-top:15px;
+
+font-size:14px;
+
+color:#777;
 
 }
 
@@ -137,21 +156,21 @@ color:#2E7D32;
 
 <div class="card">
 
-<h2>نسخ رقم المحفظة الإلكترونية</h2>
+<h2>نسخ رقم المحفظة</h2>
+
+<div class="subtitle">
+اضغط الزر لنسخ الرقم ثم ارجع إلى الفاتورة.
+</div>
 
 <div class="number" id="wallet">
-
 01515917591
-
 </div>
 
 <button id="copyBtn">
-
 📋 اضغط لنسخ الرقم
-
 </button>
 
-<div class="success" id="success">
+<div id="message">
 
 ✅ تم نسخ الرقم بنجاح
 
@@ -159,38 +178,91 @@ color:#2E7D32;
 
 <button id="closeBtn">
 
-إغلاق الصفحة
+⬅️ الرجوع إلى الفاتورة
 
 </button>
+
+<div id="note">
+
+إذا لم يتم الرجوع تلقائيًا يمكنك إغلاق هذه الصفحة.
+
+</div>
 
 </div>
 
 <script>
 
-const btn=document.getElementById("copyBtn");
+const wallet="01515917591";
 
-btn.onclick=async()=>{
+async function copyText(text){
 
-await navigator.clipboard.writeText("01515917591");
+if(navigator.clipboard){
 
-document.getElementById("success").style.display="block";
+await navigator.clipboard.writeText(text);
+
+}else{
+
+const input=document.createElement("input");
+
+input.value=text;
+
+document.body.appendChild(input);
+
+input.select();
+
+document.execCommand("copy");
+
+input.remove();
+
+}
+
+}
+
+document.getElementById("copyBtn").onclick=async()=>{
+
+try{
+
+await copyText(wallet);
+
+document.getElementById("wallet").style.transform="scale(1.08)";
+
+setTimeout(()=>{
+
+document.getElementById("wallet").style.transform="scale(1)";
+
+},250);
+
+document.getElementById("message").style.display="block";
+
+document.getElementById("copyBtn").style.display="none";
 
 document.getElementById("closeBtn").style.display="block";
 
-btn.style.display="none";
+}catch{
+
+alert("تعذر نسخ الرقم.");
 
 }
+
+};
 
 document.getElementById("closeBtn").onclick=()=>{
 
-window.close();
+if(window.history.length>1){
 
 history.back();
 
+}else{
+
+window.close();
+
+document.getElementById("note").style.display="block";
+
 }
+
+};
 
 </script>
 
 </body>
-
 </html>
