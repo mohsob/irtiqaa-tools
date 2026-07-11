@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>نسخ رقم المحفظة</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Cairo',sans-serif;
+}
+
+body{
+
+background:#F8F6F2;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+height:100vh;
+
+}
+
+.card{
+
+background:white;
+
+width:380px;
+
+max-width:92%;
+
+padding:35px;
+
+border-radius:18px;
+
+box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+text-align:center;
+
+}
+
+h2{
+
+color:#123E78;
+
+margin-bottom:25px;
+
+}
+
+.number{
+
+font-size:34px;
+
+font-weight:bold;
+
+color:#123E78;
+
+letter-spacing:2px;
+
+margin-bottom:25px;
+
+}
+
+button{
+
+width:100%;
+
+padding:14px;
+
+border:none;
+
+border-radius:12px;
+
+font-size:18px;
+
+cursor:pointer;
+
+transition:.3s;
+
+margin-top:10px;
+
+}
+
+#copyBtn{
+
+background:#123E78;
+
+color:white;
+
+}
+
+#copyBtn:hover{
+
+background:#0f3465;
+
+}
+
+#closeBtn{
+
+display:none;
+
+background:#B98A2E;
+
+color:white;
+
+}
+
+.success{
+
+display:none;
+
+margin-top:18px;
+
+font-weight:bold;
+
+color:#2E7D32;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<h2>نسخ رقم المحفظة الإلكترونية</h2>
+
+<div class="number" id="wallet">
+
+01515917591
+
+</div>
+
+<button id="copyBtn">
+
+📋 اضغط لنسخ الرقم
+
+</button>
+
+<div class="success" id="success">
+
+✅ تم نسخ الرقم بنجاح
+
+</div>
+
+<button id="closeBtn">
+
+إغلاق الصفحة
+
+</button>
+
+</div>
+
+<script>
+
+const btn=document.getElementById("copyBtn");
+
+btn.onclick=async()=>{
+
+await navigator.clipboard.writeText("01515917591");
+
+document.getElementById("success").style.display="block";
+
+document.getElementById("closeBtn").style.display="block";
+
+btn.style.display="none";
+
+}
+
+document.getElementById("closeBtn").onclick=()=>{
+
+window.close();
+
+history.back();
+
+}
+
+</script>
+
+</body>
+
+</html>
